@@ -1,0 +1,47 @@
+
+import java.io.IOException;
+import java.util.Iterator;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.io.Writable;
+import org.apache.hadoop.io.WritableComparable;
+import org.apache.hadoop.mapred.MapReduceBase;
+import org.apache.hadoop.mapred.Mapper;
+import org.apache.hadoop.mapred.OutputCollector;
+import org.apache.hadoop.mapred.Reducer;
+import org.apache.hadoop.mapred.Reporter;
+
+public class DayRatingMapper extends MapReduceBase
+implements Mapper<WritableComparable, Writable, WritableComparable, Writable> {
+
+	private Text date = new Text();
+	private final static IntWritable one = new IntWritable(1);
+	private static Pattern userRatingDate = Pattern.compile("^(\\d+), (\\d+), \\d{4}-\\d{2}-\\d{2}$");
+	
+	/**
+ * 	Given a line of input as : UserID, RatingValue, RatingDate line,
+ * 	it extracts the RatingDate, and emits(RatingDate, 1)
+ * 	*/
+	public void map(WritableComparable key, Writable values, 
+			OutputCollector output, Reporter reporter) throws IOException {
+		
+		String line = ((Text)values).toString();
+		// parse every line read from file
+		Matcher userRating = userRatingDate.matcher(line);
+		
+		// output date from line
+		Text Date = new Text();
+		
+		if (line.matches("^\\d+:$")) {
+			// This is the Movie ID line. Ignore it
+		} else if (userRating.matches()) {
+			Date.set(userRating.group(3));
+			output.collect(Date, one);
+		} else {
+			// should not occur. The input is in an invalid format.
+		}
+	}
+}
