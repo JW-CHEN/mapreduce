@@ -19,8 +19,8 @@ implements Mapper<WritableComparable, Writable, WritableComparable, Writable> {
 
 	private Text date = new Text();
 	private final static IntWritable one = new IntWritable(1);
-	private static Pattern userRatingDate = Pattern.compile("^(\\d+), (\\d+), \\d{4}-\\d{2}-\\d{2}$");
-	
+	private static Pattern userRatingDate = Pattern.compile("^(\\d+),(\\d+),(\\d{4}-\\d{2}-\\d{2})$");	
+
 	/**
  * 	Given a line of input as : UserID, RatingValue, RatingDate line,
  * 	it extracts the RatingDate, and emits(RatingDate, 1)
