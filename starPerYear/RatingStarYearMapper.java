@@ -22,7 +22,6 @@ public class RatingStarYearMapper extends MapReduceBase
 implements Mapper<WritableComparable, Writable, WritableComparable, Writable> {
 	
 	private static Pattern userRatingDate = Pattern.compile("^(\\d+),(\\d+),(\\d{4})-\\d{2}-\\d{2}$");
-	private Text yearStar = new Text();
 	private final static IntWritable one = new IntWritable(1);
 	
 	public void map(WritableComparable key, Writable values,
@@ -32,8 +31,11 @@ implements Mapper<WritableComparable, Writable, WritableComparable, Writable> {
 		/* values is the content of line in file*/
 		String line = ((Text)values).toString();
 		Matcher userRating = userRatingDate.matcher(line);
+                
+                System.out.println("hahaha");
 		
-		String strYearStar;
+                String strYearStar;
+                Text yearStar = new Text();
 		
 		if (line.matches("^\\d+:$")) {
 			/* This is just Moive ID line, Ignore it */	
