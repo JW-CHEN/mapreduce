@@ -14,20 +14,21 @@ import org.apache.hadoop.mapred.Reporter;
  */
 
 public class UserNumReviewReducer extends MapReduceBase
-implements Reducer<Text, IntWritable, Text, IntWritable>
+implements Reducer<Text, IntWritable, Text, Text>
 {
 	
 	public void reduce(Text key, Iterator<IntWritable> values,
-			OutputCollector<Text, IntWritable> output, Reporter reporter) throws IOException {
+			OutputCollector<Text, Text> output, Reporter reporter) throws IOException {
 		int sum = 0;
-		IntWritable numReview = new IntWritable();	
+		//IntWritable numReview = new IntWritable();	
+		Text numReview = new Text();
 
 		while (values.hasNext()) {
 			sum += values.next().get();
 		}
 		
-		//numReview.set(Integer.toString(sum));
-		numReview.set(sum);
+		numReview.set(Integer.toString(sum));
+		//numReview.set(sum);
 		output.collect(key, numReview);
 	}
 }

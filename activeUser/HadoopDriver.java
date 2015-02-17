@@ -38,7 +38,7 @@ public class HadoopDriver {
 			conf1.setMapOutputValueClass(IntWritable.class);
 			
 			conf1.setOutputKeyClass(Text.class);
-			conf1.setOutputValueClass(IntWritable.class);
+			conf1.setOutputValueClass(Text.class);
 			
 			conf1.setInputFormat(TextInputFormat.class);
 			conf1.setOutputFormat(TextOutputFormat.class);
