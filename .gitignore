@@ -1,4 +1,11 @@
 *.txt
+*.class
+*.jar
+input/mv_0000031.txt
+temp
+output
+*00000
+_SUCCESS
 
 #################
 ## Eclipse
@@ -216,4 +223,4 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
-input/mv_0000031.txt
+
