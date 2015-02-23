@@ -2,8 +2,8 @@
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
-import org.apache.hadoop.mapreduce.*;
-import org.apache.hadoop.conf.*;
+import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
@@ -19,7 +19,7 @@ import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
  * mapper2 read from "temp" path
  * reducer2 write to "output" path
  *
- * User Two JobClient to run
+ * Use Two JobClient to run
  */
 
 public class HadoopDriver {
@@ -41,18 +41,22 @@ public class HadoopDriver {
 		*/
 		if (args.length == 2) {
 			// If the Mapper has the different class with Reducer must have following two class setting
+			//debug
 			job.setMapOutputKeyClass(Text.class);
 			job.setMapOutputValueClass(IntWritable.class);		
 	
 			job.setOutputKeyClass(Text.class);
-			job.setOutputValueClass(Text.class);
+			job.setOutputValueClass(IntWritable.class);
 			
 			job.setInputFormatClass(TextInputFormat.class);
 			job.setOutputFormatClass(TextOutputFormat.class);
 
 			job.setMapperClass(FnameRateDupMapper.class);
+			job.setCombinerClass(MovieRateUniReducer.class);//new
 			job.setReducerClass(MovieRateUniReducer.class);
 			
+			job.setNumReduceTasks(1);//new
+
 			FileInputFormat.addInputPath(job, new Path(args[0]));
 			Path tempPath = new Path("temp");
 			FileOutputFormat.setOutputPath(job, tempPath);

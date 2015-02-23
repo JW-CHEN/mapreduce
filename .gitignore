@@ -1,9 +1,9 @@
-*.txt
+mv_0*
 *.class
 *.jar
 input/mv_0000031.txt
 temp
-output
+output*.txt
 *00000
 _SUCCESS
 
@@ -224,3 +224,4 @@ pip-log.txt
 #Mr Developer
 .mr.developer.cfg
 
+polarReviews/r

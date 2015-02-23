@@ -1,0 +1,1 @@
+Don't know why this doesn't work. It uses org.apache.hadoop.mapreduce. But the reducer never runs.
